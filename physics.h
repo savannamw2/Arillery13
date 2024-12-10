@@ -9,9 +9,9 @@
 
 #pragma once
 
-#define _USE_MATH_DEFINES 
+#define _USE_MATH_DEFINES
 #include <math.h>
-#include <cassert>  // for ASSERT 
+#include <cassert>  // for ASSERT
 
  /*******************************************************
   * AREA FROM RADIUS
@@ -20,7 +20,8 @@
   ********************************************************/
 inline double areaFromRadius(double radius)
 {
-   return -99.9;
+    double a = M_PI * (radius * radius);
+    return a;
 }
 
 /**********************************************************
@@ -33,10 +34,11 @@ inline double areaFromRadius(double radius)
  * This force is determined by
  *    force = 1/2 density drag area velocity ^ 2
  ************************************************************/
-inline double forceFromDrag(double density, double drag, 
-                            double radius, double velocity)
+inline double forceFromDrag(double density, double dragCoef,
+                            double area, double velocity)
 {
-   return -99.9;
+    double drag = .5 * dragCoef * density * (velocity * velocity) * area;
+    return drag;
 }
 
 /**********************************************************
@@ -50,7 +52,8 @@ inline double forceFromDrag(double density, double drag,
  ************************************************************/
 inline double accelerationFromForce(double force, double mass)
 {
-   return -99.9;
+    double a = force / mass;
+    return a;
 }
 
 /***********************************************************
@@ -64,7 +67,8 @@ inline double accelerationFromForce(double force, double mass)
  ************************************************************/
 inline double velocityFromAcceleration(double acceleration, double time)
 {
-   return -99.9;
+    double velocity = acceleration * time;
+    return velocity;
 }
 
 /*********************************************************
@@ -88,7 +92,8 @@ inline double linearInterpolation(double d0, double r0,
                                   double d1, double r1,
                                   double d)
 {
-   return -99.9;
+    double range = r0 + (r1 - r0) * (d - d0) / (d1 - d0);
+    return range;
 }
 
 /*********************************************************
@@ -102,10 +107,16 @@ struct Mapping
    double range;
 };
 
+
 /*********************************************************
  * LINEAR INTERPOLATION
  * From a list of domains and ranges, linear interpolate
  *********************************************************/
+inline double linearInterpolation(const Mapping & zero, const Mapping & one, double d)
+{
+    return linearInterpolation(zero.domain, zero.range, one.domain,  one.range, d);
+}
+
 double linearInterpolation(const Mapping mapping[], int numMapping, double domain);
 
 /*********************************************************
