@@ -35,20 +35,20 @@ public:
     // for unit tests
     friend ::TestHowitzer;
     friend TestProjectile;
-
+    
+    int age;
     // default constructor
-    Howitzer() : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(Angle(45.0)) {
+    Howitzer() : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(Angle(45.0)), age(-1) {
     }
 
-    Howitzer(Position positionUpperRight) : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(Angle(45.0)) {
+    Howitzer(Position positionUpperRight) : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(Angle(45.0)), age(-1) {
         generatePosition(positionUpperRight);
     }
     // draw
-    void draw(ogstream& gout, double flightTime) const
+    void draw(ogstream& gout) const
     {
         gout.drawHowitzer(position,
-            elevation.getRadians(),
-            flightTime);
+            elevation.getRadians(), age);
     }
 
     // where is the howitzer at right now?
@@ -82,4 +82,5 @@ private:
     Position position;      // initial position of the projectile
     double muzzleVelocity;  // muzzle velocity, defaults to 827.0 m/s
     Angle elevation;        // the elevation of the howitzer where 0 is up and positive is right.
+  
 };

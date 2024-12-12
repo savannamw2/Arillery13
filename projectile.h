@@ -16,6 +16,8 @@
 #include "physics.h"
 #include "howitzer.h"
 #include "uiDraw.h"
+#include <iostream>
+using namespace std;
 
 #define DEFAULT_PROJECTILE_WEIGHT 46.7       // kg
 #define DEFAULT_PROJECTILE_RADIUS 0.077545   // m
@@ -36,10 +38,23 @@ public:
    // create a new projectile with the default settings
    Projectile() : mass(46.7), radius(0.077545) {}
 
+    void draw(ogstream& gout, double flightTime)
+    {
+        while (!flightPath.empty())
+        {
+            gout.drawProjectile(flightPath.front().pos, flightTime);
+            flightPath.pop_front();
+        }
+    }
 
+    void reset(int &age)
+    {
+        flightPath.clear();
+        age = -1; 
+    }
 
    // advance the round forward until the next unit of time
-   void advance(double simulationTime);
+   void advance(double simulationTime, int &age);
 
    void fire(const Position &posHowitzer, double simulationTime, const Angle &elevation,
              double muzzleVelocity);

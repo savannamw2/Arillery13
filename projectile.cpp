@@ -12,7 +12,7 @@
  #include "angle.h"
  using namespace std;
 
- void Projectile::advance(double simulationTime)
+void Projectile::advance(double simulationTime, int &age)
  {
      if (flightPath.empty())
          return;
@@ -44,6 +44,8 @@
      pvt.pos.add(aTotal, pvt.v, interval);
      pvt.v.add(aTotal, interval);
      pvt.t = simulationTime;
+    
+    age++; 
      
      flightPath.push_back(pvt);
  }
@@ -55,5 +57,6 @@
      pvt.pos = posHowitzer;
      pvt.t = simulationTime;
      pvt.v.set(elevation, muzzleVelocity);
-     flightPath.push_back(pvt); 
+     flightPath.push_back(pvt);
+     
 }

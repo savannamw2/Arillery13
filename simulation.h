@@ -2,7 +2,7 @@
  * Header File:
  *    SIMULATION
  * Author:
- *    <your name here>
+* Savanna Whittaker
  * Summary:
  *    Execute one simulation of a projectile being fired.
  ************************************************************************/
@@ -26,4 +26,6 @@ public:
    Howitzer howitzer;
    Ground ground;
    Projectile projectile;
+    
+    
 };

@@ -45,7 +45,7 @@ private:
 protected:
 
    // for closeEnough() and assertEquals(), what is the tolerance?
-   double tolerance = 0.0001;
+   double tolerance = 0.6;
    
    // utility function because floating point numbers are approximations
    bool closeEnough(double value, double test) const

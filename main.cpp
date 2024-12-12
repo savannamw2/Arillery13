@@ -27,12 +27,46 @@ void callBack(const Interface* pUI, void* p)
 {
    // the first step is to cast the void pointer into a simulator object. This
    // is the first step of every single callback function in OpenGL. 
-   Simulator* pSim = (Simulator*)p;
-
-   ogstream gout;
-   Position pos(10,10);
-   gout = pos;
-   gout << "Hello world";
+    Simulator* pSim = (Simulator*)p;
+    ogstream gout;
+    
+    double second = 1;
+    
+    // The howitzer rotating up/down and left/right
+    if (pUI->isRight())
+    {
+        pSim -> howitzer.rotate(.05);
+    }
+    if (pUI->isLeft())
+    {
+        pSim -> howitzer.rotate(-.05);
+    }
+    if (pUI->isUp())
+    {
+        pSim -> howitzer.raise(.003);
+    }
+    if (pUI->isDown())
+    {
+        pSim -> howitzer.raise(-.003);
+    }
+    
+    
+    // The projectile fired more than once
+    if (pUI->isSpace())
+    {
+        pSim -> projectile.reset(pSim -> howitzer.age);
+        
+        pSim -> projectile.fire(pSim -> howitzer.getPosition(), second,  pSim -> howitzer.getElevation(),
+                                pSim -> howitzer.getMuzzleVelocity());
+    }
+    
+    pSim -> projectile.advance(second, pSim -> howitzer.age);
+    
+    
+    pSim -> howitzer.draw(gout);
+    pSim -> ground.draw(gout);
+    pSim -> projectile.draw(gout, pSim -> howitzer.age);
+    
 }
 
 double Position::metersFromPixels = 40.0;
